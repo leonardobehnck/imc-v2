@@ -5,15 +5,43 @@ let tabelaImc = [
   { classificacao: "Sobrepeso", menorQue: 30 },
   { classificacao: "Obesidade Grau I", menorQue: 35 },
   { classificacao: "Obesidade Grau II", menorQue: 40 },
-  { classificacao: "Obesidade Grau III", menorQue: 1000 },
+  { classificacao: "Obesidade Grau III", menorQue: 999 },
 ]
 
 function gerarTabela() {
-
+  let classificacao = "<tr><td>Classificação</td><td>Menor que</td><td id='btnRemover'></td></tr>"
+  let i = 0
+  for (item of tabelaImc) {
+    let imcReal = (item.menorQue < 500) ? item.menorQue : "-"
+    classificacao += `<tr><td>${item.classificacao}</td><td>${imcReal}</td><td id="btnRemover"><button onclick="remove(${i})">-</button></td></tr>`
+    i++
+  }
+  document.getElementById('classificacaoImc').innerHTML = classificacao
+  let tabela = ""
+  for (item of tabelaImc) {
+    tabela += item.classificacao + "," + item.menorQue + "\n"
+  }
+  document.getElementById('editorImc').value = tabela
 }
 
+function atualizaTabela() {
+  let leitura = document.getElementById('editorImc').value
+  let linhas = leitura.split("\n")
+  tabelaImc = []
+  for (linha of linhas) {
+    let par = linha.split(",")
+    if (par.length > 1) {
+      let entrada = { classificacao: par[0], menorQue: par[1] }
+      tabelaImc.push(entrada)
+    }
+    gerarTabela()
+  }
+}
 
-
+function remove(indice) {
+  tabelaImc.splice(indice, 1)
+  gerarTabela()
+}
 
 function calcular() {
   let peso = Number(document.getElementById('peso').value)
@@ -23,35 +51,15 @@ function calcular() {
   let classificacao = ""
   let mensagem = ""
 
+  for (item of tabelaImc) {
+    if (imc <= item.menorQue) {
+      classificacao = item.classificacao
+      break
+    }
+  }
 
-  if (peso > 0 && altura > 0) {
-    if (imc < 17) {
-      classificacao = "Você está muito abaixo do peso."
-    }
-    else if (imc < 18.5) {
-      classificacao = "Você está abaixo do peso."
-    }
-    else if (imc < 24.9) {
-      classificacao = "Peso normal."
-    }
-    else if (imc < 30) {
-      classificacao = "Acima do peso."
-    }
-    else if (imc < 35) {
-      classificacao = "Obesidade Grau I."
-    }
-    else if (imc < 40) {
-      classificacao = `Obesidade Grau II. Seu IMC é <strong>${imc}</strong>`
-    }
-    else {
-      classificacao = `Obesidade Grau III. Seu IMC é <strong>${imc}</strong>`
-    }
-  }
-  else {
-    alert("Digite um valor")
-  }
   mensagem = "Peso: " + peso + "kg<br/>" + "Altura: " + altura + "m<br/>" + "IMC: " + imc + "<br/>" + "Classificação: " + classificacao
 
-  res.innerHTML += mensagem
+  res.innerHTML = mensagem
 }
 

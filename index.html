@@ -10,7 +10,7 @@
   <link rel="stylesheet" href="style.css">
 </head>
 
-<body>
+<body onload="gerarTabela()">
 
   <section>
     <div id="dados">
@@ -27,41 +27,12 @@
   <section>
     <div id="editor">
       <h1>Editor de Parâmetros</h1>
-      <table id="tabela">
-        <tr>
-          <td>Classificação</td>
-          <td>Menor que</td>
-        </tr>
-        <tr>
-          <td>Muito abaixo do peso</td>
-          <td>17</td>
-        </tr>
-        <tr>
-          <td>Abaixo do peso</td>
-          <td>18,5</td>
-        </tr>
-        <tr>
-          <td>Peso normal</td>
-          <td>24,9</td>
-        </tr>
-        <tr>
-          <td>Sobrepeso</td>
-          <td>30</td>
-        </tr>
-        <tr>
-          <td>Obesidade Grau I</td>
-          <td>35</td>
-        </tr>
-        <tr>
-          <td>Obesidade Grau II</td>
-          <td>40</td>
-        </tr>
-        <tr>
-          <td>Obesidade Grau III</td>
-          <td>40</td>
-        </tr>
-
+      <p>Tabela dos parâmetros IMC</p>
+      <table id="classificacaoImc">
       </table>
+      <p>Editar parâmetros do cálculo IMC:</p>
+      <textarea id="editorImc" cols="30" rows="10"></textarea>
+      <button onclick="atualizaTabela()">Atualiza tabela</button>
     </div>
   </section>
 
