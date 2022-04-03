@@ -8,29 +8,29 @@ let tabelaImc = [
   { classificacao: "Obesidade Grau III", menorQue: 999 },
 ]
 
-function gerarTabela() {
+function gerarTabela() { //Gera tabela e imprime na tela
   let classificacao = "<tr><td>Classificação</td><td>Menor que</td><td id='btnRemover'></td></tr>"
   let i = 0
-  for (item of tabelaImc) {
+  for (item of tabelaImc) { 
     let imcReal = (item.menorQue < 500) ? item.menorQue : "-"
     classificacao += `<tr><td>${item.classificacao}</td><td>${imcReal}</td><td id="btnRemover"><button onclick="remove(${i})">-</button></td></tr>`
     i++
-  }
+  } // Imprime a classificação do imc no campo texto
   document.getElementById('classificacaoImc').innerHTML = classificacao
   let tabela = ""
   for (item of tabelaImc) {
-    tabela += item.classificacao + "," + item.menorQue + "\n"
+    tabela += item.classificacao + "," + item.menorQue + "\n" //quebra por linha
   }
-  document.getElementById('editorImc').value = tabela
+  document.getElementById('editorImc').value = tabela 
 }
 
-function atualizaTabela() {
+function atualizaTabela() { // Para cada linha digitada, atualiza a variavel
   let leitura = document.getElementById('editorImc').value
-  let linhas = leitura.split("\n")
-  tabelaImc = []
+  let linhas = leitura.split("\n") //quebra por linha
+  tabelaImc = [] 
   for (linha of linhas) {
     let par = linha.split(",")
-    if (par.length > 1) {
+    if (par.length > 1) { //se tiver mais de 1 elemento
       let entrada = { classificacao: par[0], menorQue: par[1] }
       tabelaImc.push(entrada)
     }
